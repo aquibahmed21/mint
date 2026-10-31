@@ -51,7 +51,7 @@ saarathy_checkout() {
 
 full_dconf_restore() {
     local file="$BUNDLE_DIR/dconf/dconf-full.ini"
-    [[ -f $file ]] || { echo "No $file. Run 00-export-from-old-pc.sh first."; return 1; }
+    [[ -f $file ]] || { echo "No $file. Run export-from-old-pc.sh first."; return 1; }
     echo "This overwrites ALL dconf settings with your old PC's settings."
     read -rp "Type 'yes' to continue: " ans
     [[ $ans == "yes" ]] || { echo "Cancelled."; return 0; }

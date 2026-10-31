@@ -3,7 +3,7 @@
 #  EXPORT your current Linux Mint look and app lists into mint-bundle/
 #
 #  Run this on the PC you have now (not on the fresh install):
-#      bash 00-export-from-old-pc.sh
+#      bash export-from-old-pc.sh
 #  It only reads your settings. 02-after-reboot.sh restores the bundle later.
 # =====================================================================
 

@@ -119,7 +119,7 @@ restore_desktop() {
     local b="$BUNDLE_DIR"
     if [[ ! -d $b ]]; then
         echo "No mint-bundle folder at $b."
-        echo "Run 00-export-from-old-pc.sh on your current PC, then copy the bundle here."
+        echo "Run export-from-old-pc.sh on your current PC, then copy the bundle here."
         return 1
     fi
 

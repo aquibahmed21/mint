@@ -15,7 +15,8 @@ Mint 22.3, Cinnamon 6.6). Nothing changes on a system until you run a script.
 
 | Order | File | Required? | When | What it does |
 |:-----:|------|-----------|------|--------------|
-| 00 | `00-export-from-old-pc.sh` | Only on your **old** PC | Once, before the fresh install | Saves your look and settings into `mint-bundle/` |
+| – | `export-from-old-pc.sh` | Only on your **old** PC | Once, before the fresh install | Saves your look and settings into `mint-bundle/` |
+| **00** | **`00-bootstrap-fresh-pc.sh`** | **Yes** | **Before 01**, on the fresh install | Installs git, downloads the kit from GitHub into `~/mint`, makes all scripts executable, then offers to start 01 |
 | **01** | **`01-base-install.sh`** | **Yes** | **First**, on the fresh install | Removes bloat, updates, installs apps, driver, add-ons, the FTP server and the terminal prompt. Then asks to reboot. |
 | **02** | **`02-after-reboot.sh`** | **Yes** | **Second**, after the restart | Starts **by itself** after you log in. Tunes the PC and restores your desktop. |
 | 03 | `03-optional-extras.sh` | Optional | Any time | Personal extras, each asks yes or no (browser wipe, work launcher, SVN...) |
@@ -23,13 +24,14 @@ Mint 22.3, Cinnamon 6.6). Nothing changes on a system until you run a script.
 | 05 | `05-optional-tunnels-vps.sh` | Optional | Any time | Cloudflare Tunnel, ngrok, and an SSH key for a VPS: install or remove |
 | 06 | `06-uninstall-apps.sh` | Optional | Any time | Lists what the kit installed, you pick which to remove |
 | 07 | `07-cleanup-downloads-ram.sh` | Optional | Any time | Organizes Downloads, clears safe caches, checks RAM |
+| 08 | `08-optional-clean-unused-items.sh` | Optional | Any time | Finds unused applets, extensions, desklets, themes, icons and fonts. Moves your choice to a quarantine folder (nothing is deleted). |
 
 The `core/` scripts are **required**: 01 always runs them. The `optional/` scripts are add-ons that 01 may call, and you can also run them yourself. The `tools/` scripts are helpers you run when needed.
 
 ```mermaid
 flowchart LR
     subgraph OLD["Old PC (once)"]
-        E[00-export-from-old-pc.sh]
+        E[export-from-old-pc.sh]
     end
     subgraph NEW["Fresh Mint"]
         A["01-base-install.sh<br/>FIRST"] --> R{Reboot}
@@ -60,7 +62,10 @@ flowchart LR
 
 ```bash
 # On the OLD PC (already done, the bundle is in mint-bundle/)
-bash 00-export-from-old-pc.sh
+bash export-from-old-pc.sh
+
+# On the FRESH PC, get the kit from GitHub and make scripts executable:
+bash 00-bootstrap-fresh-pc.sh   # then answer y to start 01 (or run it yourself)
 
 # On the FRESH PC: copy the whole mint-setup/ folder (with mint-bundle/), then:
 cd mint-setup
@@ -78,7 +83,8 @@ bash 01-base-install.sh      # answer the reboot question with y
 ```
 mint-setup/
 ├── README.md                    <- this file
-├── 00-export-from-old-pc.sh     <- run on the OLD PC
+├── 00-bootstrap-fresh-pc.sh      <- RUN FIRST on a fresh PC (git + download the kit)
+├── export-from-old-pc.sh     <- run on the OLD PC
 ├── 01-base-install.sh           <- RUN FIRST
 ├── 02-after-reboot.sh           <- RUN SECOND (automatic after login)
 ├── 03-optional-extras.sh        <- optional personal extras
@@ -86,6 +92,7 @@ mint-setup/
 ├── 05-optional-tunnels-vps.sh   <- optional: Cloudflare / ngrok / VPS key (menu)
 ├── 06-uninstall-apps.sh         <- optional: remove what the kit installed (menu)
 ├── 07-cleanup-downloads-ram.sh  <- optional: tidy Downloads, caches, RAM
+├── 08-optional-clean-unused-items.sh <- optional: unused applets, themes, icons, fonts (quarantine)
 ├── common.sh                    <- shared helpers (do not run directly)
 ├── mint-bundle/                 <- your saved look (from 00)
 ├── optional/                    <- add-ons, called by 01 or run directly
@@ -115,7 +122,7 @@ bash optional/docker.sh purge
 
 ## 3. Script details
 
-### 00: export from the old PC
+### Export from the old PC: `export-from-old-pc.sh`
 
 Reads your settings and copies them into `mint-bundle/`. It only **reads**.
 Saves: desktop settings (dconf), applets, extensions, themes, icons, fonts,
@@ -267,6 +274,40 @@ Plain FTP (no encryption) is switched off by default because it sends
 passwords in readable form. Set `FTP_TLS=0` in the file only on a trusted local network.
 
 Check it any time: `bash core/ftp.sh status`
+
+### 00: bootstrap (run first on a fresh PC)
+
+The first script on a fresh PC. It downloads the kit, so it is the only file you need to copy by hand (or fetch with the one-line `curl` command at the top of the file).
+
+```mermaid
+flowchart LR
+    A([00-bootstrap-fresh-pc.sh]) --> G[Install git if missing]
+    G --> C[git clone the kit<br/>into ~/mint]
+    C --> X[chmod +x on every .sh]
+    X --> Q{Start 01 now?}
+    Q -- yes --> B[01-base-install.sh]
+    Q -- no --> E[Shows the command to run later]
+```
+
+If `~/mint` already exists as a clone, it is updated with `git pull`. If it exists but is not a clone, the script stops and asks you to move it.
+
+### 08: unused desktop items (optional)
+
+Finds items you don't use and moves the ones you pick to a quarantine folder. Nothing is deleted.
+
+| Type | Counts as unused when |
+|---|---|
+| Applet | Not placed on any panel |
+| Extension, desklet | Not enabled |
+| Theme, icon | Not the one Cinnamon uses (the `default` cursor folder is kept) |
+| Font | Its family is not used by any setting or any installed applet, extension or desklet. Exact duplicate files are listed too. |
+
+```bash
+bash 08-optional-clean-unused-items.sh            # this PC
+bash 08-optional-clean-unused-items.sh --bundle   # mint-bundle/ (before the export)
+```
+
+The moves are logged in `moved.tsv` inside the quarantine folder. To put an item back, use `mv` with the two paths from that file. Fonts are the main case: the check is a family-name match, so a font used by an app outside Cinnamon (for example a website or a game) can show as unused. Look at the list before you choose.
 
 ### Terminal and prompt: `core/terminal.sh` (required, installed by 01)
 
