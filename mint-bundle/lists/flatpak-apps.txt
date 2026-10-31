@@ -1,0 +1,14 @@
+ai.lmstudio.lm-studio
+com.anydesk.Anydesk
+com.github.qarmin.czkawka
+com.github.tchx84.Flatseal
+com.github.wwmm.easyeffects
+com.keepsolid.VpnUnlimited
+com.leinardi.gst
+com.warlordsoftwares.youtube-downloader-4ktube
+fr.handbrake.ghb
+io.freetubeapp.FreeTube
+io.github.aandrew_me.ytdn
+net.conceptualspace.prunr
+org.mozilla.firefox
+org.rncbc.qpwgraph

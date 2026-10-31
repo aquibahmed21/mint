@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 300" width="960" height="300" font-family="Arial, Helvetica, sans-serif">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#555"/>
+    </marker>
+  </defs>
+  <rect width="960" height="300" fill="#f7f9fc"/>
+  <text x="480" y="34" text-anchor="middle" font-size="20" font-weight="bold" fill="#222">How the setup runs on a fresh Linux Mint</text>
+
+  <!-- Step boxes -->
+  <rect x="20" y="90" width="150" height="90" rx="12" fill="#e8f0fe" stroke="#4a78c2" stroke-width="2"/>
+  <text x="95" y="122" text-anchor="middle" font-size="15" font-weight="bold" fill="#222">Fresh Mint</text>
+  <text x="95" y="146" text-anchor="middle" font-size="12" fill="#333">just installed</text>
+
+  <rect x="210" y="90" width="170" height="90" rx="12" fill="#e6f4ea" stroke="#2e7d32" stroke-width="2"/>
+  <text x="295" y="120" text-anchor="middle" font-size="15" font-weight="bold" fill="#222">run1.sh</text>
+  <text x="295" y="142" text-anchor="middle" font-size="12" fill="#333">apps, driver, add-ons</text>
+  <text x="295" y="160" text-anchor="middle" font-size="12" fill="#333">then asks to reboot</text>
+
+  <rect x="420" y="90" width="110" height="90" rx="12" fill="#fff4e5" stroke="#e08a00" stroke-width="2"/>
+  <text x="475" y="130" text-anchor="middle" font-size="15" font-weight="bold" fill="#222">Reboot</text>
+  <text x="475" y="152" text-anchor="middle" font-size="12" fill="#333">+ log in</text>
+
+  <rect x="570" y="90" width="170" height="90" rx="12" fill="#e6f4ea" stroke="#2e7d32" stroke-width="2"/>
+  <text x="655" y="120" text-anchor="middle" font-size="15" font-weight="bold" fill="#222">run2.sh</text>
+  <text x="655" y="142" text-anchor="middle" font-size="12" fill="#333">runs by itself</text>
+  <text x="655" y="160" text-anchor="middle" font-size="12" fill="#333">tuning + your look</text>
+
+  <rect x="790" y="90" width="150" height="90" rx="12" fill="#f3e8fd" stroke="#7b3fb5" stroke-width="2"/>
+  <text x="865" y="122" text-anchor="middle" font-size="15" font-weight="bold" fill="#222">Done</text>
+  <text x="865" y="146" text-anchor="middle" font-size="12" fill="#333">optional: run-optional.sh</text>
+
+  <!-- Arrows -->
+  <line x1="170" y1="135" x2="208" y2="135" stroke="#555" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="380" y1="135" x2="418" y2="135" stroke="#555" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="530" y1="135" x2="568" y2="135" stroke="#555" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="740" y1="135" x2="788" y2="135" stroke="#555" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- Add-ons row -->
+  <text x="295" y="220" text-anchor="middle" font-size="13" font-weight="bold" fill="#2e7d32">called by run1.sh:</text>
+  <rect x="60" y="235" width="150" height="40" rx="8" fill="#ffffff" stroke="#2e7d32"/>
+  <text x="135" y="260" text-anchor="middle" font-size="13" fill="#222">VirtualBox  (on)</text>
+  <rect x="225" y="235" width="150" height="40" rx="8" fill="#ffffff" stroke="#2e7d32"/>
+  <text x="300" y="260" text-anchor="middle" font-size="13" fill="#222">ProtonVPN   (on)</text>
+  <rect x="390" y="235" width="150" height="40" rx="8" fill="#ffffff" stroke="#999"/>
+  <text x="465" y="260" text-anchor="middle" font-size="13" fill="#777">Docker      (off)</text>
+  <rect x="555" y="235" width="150" height="40" rx="8" fill="#ffffff" stroke="#999"/>
+  <text x="630" y="260" text-anchor="middle" font-size="13" fill="#777">CUDA        (off)</text>
+</svg>

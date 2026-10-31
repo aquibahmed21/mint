@@ -1,0 +1,19 @@
+{
+    "uuid": "mouse-click-effects@anaximeno",
+    "name": "Mouse Click Effects",
+    "version": "1.1.1",
+    "description": "Display mouse click effects on Cinnamon.",
+    "url": "https://github.com/anaximeno/mouse-click-effects",
+    "website": "https://github.com/anaximeno/mouse-click-effects",
+    "cinnamon-version": [
+        "5.4",
+        "5.6",
+        "5.8",
+        "6.0",
+        "6.2",
+        "6.4",
+        "6.6"
+    ],
+    "author": "anaximeno",
+    "last-edited": 1791559279
+}
